@@ -4,7 +4,9 @@ I wanted to track my webcam state, whether or not it is in use, so I could turn 
 
 When this Python script runs, it checks if my webcam is in use or not and updates a ThingSpeak channel with the status. Then, an ESP-8266 Wi-Fi device reads that state from ThingSpeak to control a light.
 
-For more information about my On Air light project: (https://nothans.com/on-air-light-for-microsoft-teams-and-zoom-meetings)
+For more information about my On Air light project:
+* https://nothans.com/on-air-light-for-microsoft-teams-and-zoom-meetings
+* https://nothans.com/on-air-light-2023
 
 ## Setup
 
@@ -16,4 +18,4 @@ For more information about my On Air light project: (https://nothans.com/on-air-
 * pip install opencv-python
 * pip install requests
 
-[![On Air Light Project](On-Air-Light.jpg)](https://nothans.com/on-air-light-for-microsoft-teams-and-zoom-meetings)
+[![On Air Light Project](On-Air-Light.jpg)](https://nothans.com/on-air-light-2023)
