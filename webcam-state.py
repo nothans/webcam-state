@@ -16,7 +16,7 @@ Setup
     * Create ThingSpeak channel at https://thingspeak.com with Field 1 enabled
     * Add your channel's Write API Key to the thingSpeakWriteKey variable
 
-Created: Feb 11, 2021 by Hans Scharler (http://www.nothans.com)
+Created: Feb 11, 2021 by Hans Scharler (https://nothans.com)
 
 """
 
@@ -27,14 +27,22 @@ thingspeakWriteURL = 'https://api.thingspeak.com/update.json'
 thingSpeakWriteKey = 'WWWWXXXXYYYYZZZZ'
 
 def returnWebcamStatus(webcamIndex):
-
-    webcam = cv2.VideoCapture(webcamIndex, cv2.CAP_DSHOW)
-
-    if webcam.isOpened():
+    try:
+        webcam = cv2.VideoCapture(webcamIndex)
+        if not webcam.isOpened():
+            return True  # Camera is in use or not available
+        
+        # Try to read a frame
+        ret, frame = webcam.read()
         webcam.release()
-        return True #Webcam not in use
-    else:
-        return False #Webcam in use
+        
+        if not ret or frame is None:
+            return True  # Camera is in use or not working properly
+        
+        return False  # Camera is available and working
+    except Exception as e:
+        print(f"Error checking webcam {webcamIndex}: {str(e)}")
+        return True  # Assume camera is in use if there's an error
 
 
 def postToThingSpeak(valueToPost):
@@ -45,6 +53,17 @@ def postToThingSpeak(valueToPost):
 
     return
 
+def test_cameras():
+    """Test all available cameras and print their status."""
+    for i in range(10):
+        webcam = cv2.VideoCapture(i)
+        if webcam.isOpened():
+            ret, frame = webcam.read()
+            webcam.release()
+            status = "Working" if ret else "Not working properly"
+            print(f"Camera index {i}: Available ({status})")
+        else:
+            print(f"Camera index {i}: Not available")    
 
 def main():
 
